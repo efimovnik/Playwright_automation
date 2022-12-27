@@ -23,6 +23,7 @@ def test_login_parametrize(page, email, password) -> None:
     page.get_by_test_id("emailAuth").get_by_label("Email").fill(email)
     page.get_by_label("Password").fill(password)
     page.get_by_test_id("submit").get_by_test_id("buttonElement").click()
+    page.wait_for_selector("//button[@aria-label='train.supersonic account menu']", timeout=3000)
     page.get_by_role("button", name="train.supersonic account menu").click()
     page.get_by_role("link", name="My Account").click()
 
