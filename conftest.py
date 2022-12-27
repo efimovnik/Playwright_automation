@@ -6,12 +6,11 @@ import pytest
 PASSWORD = os.environ['PASSWORD']
 
 
-@pytest.fixture(scope="session")
-def set_up(browser):
+def set_up(page):
     # Arrange - Giver
     # browser = playwright.chromium.launch(headless=False)
-    context = browser.new_context()
-    page = context.new_page()
+    # context = browser.new_context()
+    # page = context.new_page()
     page.goto("https://symonstorozhenko.wixsite.com/website-1")
     page.set_default_timeout(3000)
 
@@ -19,8 +18,13 @@ def set_up(browser):
 
 
 @pytest.fixture(scope="session")
-def login_set_up(set_up):
-    page = set_up
+def context_creation(playwright):
+    browser = playwright.chromium.launch(headless=False, slow_mo=300)
+    context = browser.new_context()
+    page = context.new_page()
+    page.goto("https://symonstorozhenko.wixsite.com/website-1")
+    page.set_default_timeout(3000)
+
     login_issue = True
     while login_issue:
         if not page.get_by_test_id("signUp.switchToSignUp").is_visible():
@@ -36,5 +40,15 @@ def login_set_up(set_up):
     # page.get_by_label("Password").fill(utils.secret_config.PASSWORD)
     page.get_by_label("Password").fill(PASSWORD)
     page.get_by_test_id("submit").get_by_test_id("buttonElement").click()
+    yield context
+
+
+@pytest.fixture()
+def login_set_up(context_creation):
+    context = context_creation
+    page = context.new_page()
+    page.goto("https://symonstorozhenko.wixsite.com/website-1")
+    page.set_default_timeout(3000)
+
     yield page
     page.close()

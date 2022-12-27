@@ -13,7 +13,6 @@ def test_home_page(login_set_up):
 
 
 @pytest.mark.regression
-@pytest.mark.xfail(reason="demonstrate fail")
 def test_home_page_2(login_set_up):
     # Assess - Given
     page = login_set_up
