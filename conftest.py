@@ -13,7 +13,6 @@ def set_up(browser):
     page.set_default_timeout(3000)
 
     yield page
-    page.close()
 
 
 @pytest.fixture(scope="session")
@@ -34,3 +33,4 @@ def login_set_up(set_up):
     page.get_by_label("Password").fill("Playwrighttest123")
     page.get_by_test_id("submit").get_by_test_id("buttonElement").click()
     yield page
+    page.close()
