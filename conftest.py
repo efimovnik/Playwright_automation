@@ -1,8 +1,7 @@
+import os
 import time
 import pytest
 from playwright.sync_api import Playwright
-
-import utils.secret_config
 
 
 @pytest.fixture(scope="session")
@@ -32,7 +31,8 @@ def login_set_up(set_up):
     page.get_by_test_id("signUp.switchToSignUp").click()
     page.get_by_test_id("siteMembersDialogLayout").get_by_test_id("buttonElement").click()
     page.get_by_test_id("emailAuth").get_by_label("Email").fill("train.supersonic@gmail.com")
-    page.get_by_label("Password").fill(utils.secret_config.PASSWORD)
+    # page.get_by_label("Password").fill(utils.secret_config.PASSWORD)
+    page.get_by_label("Password").fill(os.environ['PASSWORD'])
     page.get_by_test_id("submit").get_by_test_id("buttonElement").click()
     yield page
     page.close()
