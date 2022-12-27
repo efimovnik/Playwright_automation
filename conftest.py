@@ -40,7 +40,7 @@ def context_creation(playwright):
     # page.get_by_label("Password").fill(utils.secret_config.PASSWORD)
     page.get_by_label("Password").fill(PASSWORD)
     page.get_by_test_id("submit").get_by_test_id("buttonElement").click()
-    # page.wait_for_load_state('networkidle')
+    page.wait_for_load_state(timeout=10000)
     time.sleep(2)
     context.storage_state(path='state.json')
     yield context
