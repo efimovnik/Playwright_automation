@@ -2,7 +2,6 @@ import time
 import pytest
 from playwright.sync_api import Playwright, sync_playwright, expect
 
-@pytest.mark.skip
 @pytest.mark.parametrize("email", ["train.supersonic@gmail.com",
                                    pytest.param("train.supersonic", marks=pytest.mark.xfail),])
 @pytest.mark.parametrize("password", ["Playwrighttest123",
