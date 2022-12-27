@@ -3,9 +3,10 @@ import pytest
 from playwright.sync_api import Playwright, sync_playwright, expect
 
 
-@pytest.mark.parametrize("email, password", [("train.supersonic@gmail.com", "Playwrighttest123"),
-                                             pytest.param("train.supersonic", "Playwrighttest123", marks=pytest.mark.xfail),
-                                             pytest.param("train.supersonic@gmail.com", "", marks=pytest.mark.xfail)])
+@pytest.mark.parametrize("email", ["train.supersonic@gmail.com",
+                                   pytest.param("train.supersonic", marks=pytest.mark.xfail),])
+@pytest.mark.parametrize("password", ["Playwrighttest123",
+                                      pytest.param("", marks=pytest.mark.xfail)])
 @pytest.mark.integration
 def test_login_parametrize(page, email, password) -> None:
     page.goto("https://symonstorozhenko.wixsite.com/website-1")
